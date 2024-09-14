@@ -3,6 +3,7 @@ import AddMeal from "./AddMeal";
 import Macros from "./Macros";
 import History from "./History";
 import MacrosContext from "./Context/MacrosContext";
+import Charts from "./Charts";
 
 function App() {
   // Initialize macros and meal history from localStorage
@@ -52,33 +53,22 @@ function App() {
 
   return (
     <MacrosContext.Provider value={[macros, setMacros, history, setHistory]}>
-      <div className="p-4 bg-white rounded-xl shadow-md max-w-md mx-auto flex flex-col gap-5">
-        {goalsSet ? (
-          <>
-            <Macros />
-            <hr />
-            <AddMeal />
-            <hr />
-            <History />
-            <button
-              className="mt-4 bg-red-500 text-white py-2 px-4 rounded-md font-semibold"
-              onClick={handleResetMacros}
-            >
-              Reset Macros
-            </button>
-          </>
-        ) : (
-          // Render the goal-setting page (Macros component) if goals are not set
-          <div>
-            <Macros />
-            <button
-              className="mt-4 bg-blue-500 text-white py-2 px-4 rounded-md font-semibold"
-              onClick={() => setGoalsSet(true)}
-            >
-              Set Goals
-            </button>
-          </div>
-        )}
+      <div className="p-4 bg-white rounded-xl shadow-md max-w-md mx-auto flex flex-col gap-5 relative">
+        {/* Reset Macros Button */}
+        <button
+          className="absolute top-0 right-0 mt-2 mr-2 bg-red-500 text-white p-1 rounded-md font-semibold"
+          onClick={()=> {handleResetMacros(); window.location.reload()}}
+        >
+          Reset Macros
+        </button>
+
+        <Macros />
+        <hr />
+        <AddMeal />
+        <hr />
+        <History />
+        <hr/>
+        <Charts />
       </div>
     </MacrosContext.Provider>
   );
