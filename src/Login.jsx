@@ -1,17 +1,31 @@
 import React, { useState } from 'react';
 import { auth } from './firebaseConfig';
 import { signInWithEmailAndPassword } from 'firebase/auth';
+import { useNavigate } from 'react-router-dom';
 
 const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
+  const navigate = useNavigate();
 
   const handleLogin = async (e) => {
     e.preventDefault();
     try {
       const userCredential = await signInWithEmailAndPassword(auth, email, password);
-      console.log('User logged in:', userCredential.user);
+
+      // Create a token and save it to localStorage
+      const user = userCredential.user;
+      const token = { email: user.email, role: user.email === 'alnasiriyusuf@gmail.com' ? 'admin' : 'user' };
+
+      localStorage.setItem('authToken', JSON.stringify(token)); // Store token in localStorage
+
+      // Redirect based on role
+      if (token.role === 'admin') {
+        navigate('/admin'); // Redirect to admin page for admins
+      } else {
+        navigate('/'); // Redirect to home for normal users
+      }
     } catch (error) {
       setError(error.message);
     }

@@ -1,21 +1,25 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import './index.css'; // Your global CSS
-import App from './App'; // The main app component (protected)
+import './index.css';
+import App from './App'; // Main app component
 import Login from './Login'; // Login component
 import SignUp from './SignUp'; // Sign up component
+import AdminPage from './AdminPage'; // Admin page
+import Navbar from './Navbar'; // Navbar
 import ProtectedRoute from './ProtectedRoute'; // Protected route component
+import AdminProtectedRoute from './AdminProtectedRoute'; // Admin protected route
 
-const Main = () => {
+const Index = () => {
   return (
     <Router>
+      <Navbar /> {/* Navbar with the Admin button */}
       <Routes>
         {/* Public routes */}
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<SignUp />} />
 
-        {/* Protected route */}
+        {/* Protected route for normal users */}
         <Route
           path="/"
           element={
@@ -24,11 +28,20 @@ const Main = () => {
             </ProtectedRoute>
           }
         />
+
+        {/* Protected route for admins */}
+        <Route
+          path="/admin"
+          element={
+            <AdminProtectedRoute>
+              <AdminPage />
+            </AdminProtectedRoute>
+          }
+        />
       </Routes>
     </Router>
   );
 };
 
-// Create the root element and render the app
 const root = ReactDOM.createRoot(document.getElementById('root'));
-root.render(<Main />);
+root.render(<Index />);

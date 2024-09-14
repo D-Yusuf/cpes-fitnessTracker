@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { auth } from './firebaseConfig';
+import { auth } from './firebaseConfig'; // Firebase authentication
 import { onAuthStateChanged } from 'firebase/auth';
 import { Navigate } from 'react-router-dom';
 
@@ -8,10 +8,12 @@ const ProtectedRoute = ({ children }) => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, (user) => {
-      setUser(user);
+    const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
+      setUser(currentUser);
       setLoading(false);
     });
+
+    // Cleanup subscription on unmount
     return () => unsubscribe();
   }, []);
 
