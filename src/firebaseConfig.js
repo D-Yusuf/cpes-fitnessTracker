@@ -4,7 +4,7 @@ import { getAuth } from "firebase/auth";
 
 // Firebase configuration (replace with your actual config from Firebase Console)
 const firebaseConfig = {
-    apiKey: "AIzaSyBTeTPxxK0ckPYnC_1m4qEcX2e08Zx7fos",
+    apiKey: "AI",
     authDomain: "macro-tracker-7e6be.firebaseapp.com",
     projectId: "macro-tracker-7e6be",
     storageBucket: "macro-tracker-7e6be.appspot.com",
